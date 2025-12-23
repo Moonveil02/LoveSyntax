@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>🌸 Selamat Hari Ibu 🌸</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(to top, #ffe4e1, #ffb6c1, #fff0f5);
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card {
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 25px;
+    padding: 40px 60px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 1;
+  }
+
+  h1 {
+    color: #ff1493;
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 22px;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+
+  button {
+    padding: 12px 30px;
+    font-size: 18px;
+    background-color: #ff1493;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: #ff69b4;
+  }
+
+  #message {
+    font-size: 20px;
+    color: #ff1493;
+    margin-top: 20px;
+    min-height: 50px;
+  }
+
+  .flower {
+    position: absolute;
+    font-size: 30px;
+    animation: fall 3s linear forwards;
+    pointer-events: none;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(600px) rotate(360deg); opacity: 0; }
+  }
+
+  .typing {
+    border-right: 2px solid #ff1493;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    animation: blink 0.7s steps(1) infinite;
+  }
+
+  @keyframes blink {
+    0%, 50%, 100% { border-color: #ff1493; }
+    25%, 75% { border-color: transparent; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>🌸 Selamat Hari Ibu 🌸</h1>
+  <p>Untuk Ibu tercinta, terima kasih atas kasih sayangmu yang tiada tara 💖</p>
+  <button id="start-btn">Klik untuk Ucapan Spesial</button>
+  <div id="message"></div>
+</div>
+
+<script>
+const messages = [
+  "Ibu , engkau adalah bintang di hidupku ✨",
+  "Kasihmu tak ternilai , sayangku selalu untukmu 💖",
+  "Semoga hari ini dan setiap hari penuh kebahagiaan 🌷",
+  "Terima kasih Ibu , aku mencintaimu 🥰"
+];
+
+const flowersEmoji = ["🌸","🌷","💐","🌺"];
+let msgIndex = 0;
+const messageDiv = document.getElementById("message");
+const startBtn = document.getElementById("start-btn");
+
+// Fungsi efek mengetik kata per kata
+function typeMessageWords(text, callback){
+  messageDiv.innerHTML = '<span class="typing"></span>';
+  const typingSpan = messageDiv.querySelector(".typing");
+  const words = text.split(' ');
+  let wordIndex = 0;
+
+  function typeNextWord(){
+    if(wordIndex < words.length){
+      typingSpan.innerText += (wordIndex > 0 ? ' ' : '') + words[wordIndex];
+      wordIndex++;
+      setTimeout(typeNextWord, 300); // jeda tiap kata
+    } else {
+      setTimeout(callback, 1500); // jeda sebelum ucapan berikutnya
+    }
+  }
+
+  typeNextWord();
+}
+
+// Fungsi bunga jatuh
+function createFlower(){
+  const flower = document.createElement("div");
+  flower.classList.add("flower");
+  flower.innerText = flowersEmoji[Math.floor(Math.random() * flowersEmoji.length)];
+  flower.style.left = Math.random() * window.innerWidth + "px";
+  flower.style.fontSize = 20 + Math.random()*30 + "px";
+  document.body.appendChild(flower);
+  setTimeout(()=>flower.remove(), 3000);
+}
+
+// Fungsi main
+function startGreeting(){
+  // Animasi bunga jatuh
+  const flowerInterval = setInterval(createFlower, 300);
+  // Animasi lirik/ucapan
+  function nextMsg(){
+    typeMessageWords(messages[msgIndex], function(){
+      msgIndex = (msgIndex + 1) % messages.length;
+      nextMsg();
+    });
+  }
+  nextMsg();
+
+  // Stop bunga setelah ~1 menit
+  setTimeout(()=>clearInterval(flowerInterval), 60000);
+}
+
+startBtn.addEventListener("click", startGreeting);
+</script>
+
+</body>
+</html>
