@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>💐♡</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(-45deg, #ffb6c1, #ffd1dc, #ffe4e1, #ffc0cb);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+  }
+
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .card {
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    padding: 40px 50px;
+    text-align: center;
+    width: 450px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  h1 {
+    color: #ff1493;
+    margin-bottom: 20px;
+    font-size: 28px;
+  }
+
+  #text {
+    min-height: 120px;
+    font-size: 18px;
+    color: #444;
+    line-height: 1.6;
+  }
+
+  .emoji {
+    font-size: 40px;
+    margin-top: 20px;
+    animation: bounce 1s infinite alternate;
+  }
+
+  @keyframes bounce {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0); }
+  }
+
+  button {
+    margin-top: 25px;
+    padding: 12px 25px;
+    border: none;
+    background-color: #ff1493;
+    color: white;
+    font-size: 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: #ff69b4;
+  }
+
+  .typing {
+    border-right: 2px solid #ff1493;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>୨୧🌸♡ Pesan Penting untuk kamu୨୧🌸♡</h1>
+  <div id="text" class="typing"></div>
+  <div class="emoji">🌷🤍</div>
+  <button onclick="startMessage()">Buka Pesan</button>
+</div>
+
+<script>
+const messages = [
+  "Loading feelings .",
+  "Loading feelings ..",
+  "Loading feelings ...",
+  "Halo! ✨😇✨",
+  "Aku mau jujur🫣...",
+  "",
+  "Awalnya mau confess 😳",
+  "tapi mikir lagi...🤨💭",
+  "",
+  "Kayaknya bukan cinta 💔🥀",
+  "",
+  "Ini lebih penting...😊💗",
+  "",
+  "Pinjam seratus dong 💸🌸",
+  "Tenang, nanti dikembalikan kok! 😌💫",
+  "LOPYUUUU! 🥰🌷💗"
+];
+
+let index = 0;
+let charIndex = 0;
+const textDiv = document.getElementById("text");
+
+function typeMessage(message, callback) {
+  charIndex = 0;
+  textDiv.innerHTML = '';
+  const typingInterval = setInterval(() => {
+    textDiv.innerHTML += message[charIndex];
+    charIndex++;
+    if (charIndex >= message.length) {
+      clearInterval(typingInterval);
+      setTimeout(callback, 1000);
+    }
+  }, 80);
+}
+
+function startMessage() {
+  index = 0;
+  nextMessage();
+}
+
+function nextMessage() {
+  if (index < messages.length) {
+    typeMessage(messages[index], () => {
+      index++;
+      nextMessage();
+    });
+  }
+}
+</script>
+
+</body>
+</html>
